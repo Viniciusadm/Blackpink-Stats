@@ -52,6 +52,18 @@ class Model
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    public function last($where): stdClass|null
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table $where ORDER BY id DESC LIMIT 1");
+        $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
+            return null;
+        }
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
     public function create(array $data): bool
     {
         $columns = implode(', ', array_map(function ($column) {

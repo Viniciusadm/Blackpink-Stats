@@ -6,5 +6,5 @@ require 'vendor/autoload.php';
 
 class VideosView extends Model
 {
-    protected string $table = 'videos_view';
+    protected string $table = 'videos_views';
 }

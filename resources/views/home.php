@@ -9,9 +9,9 @@
                     <span class="<?php echo $classes[$key + 1] ?? ''; ?>"><?=$key + 1?>°</span> <?=$video->title?>
                 </h1>
                 <p class="lead visualizacoes">
-                    <span class="bordaVisualizacoes">10000000000</span> visualizações
+                    <span class="bordaVisualizacoes"><?=$video->formatted_views?></span> visualizações
                 </p>
-                <p class="lead"><span class="numero">10</span> dia(s) pra chegar em 100000000 visualizações</p>
+                <p class="lead"><span class="numero"><?=$video->days_to?></span> dia(s) pra chegar em <?=$video->next?> visualizações</p>
             </div>
         <?php endforeach; ?>
     </div>
