@@ -50,20 +50,22 @@ class SiteController extends Controller
      */
     public function getViews(VideosView $videos_views, mixed $video): int
     {
-        $view = $videos_views->last("WHERE video_id = $video->id")->views;
+        $view = $videos_views->last("WHERE video_id = $video->id");
         $crated_at = date('Y-m-d h:i:s', strtotime($view->created_at));
         $ten_minutes_ago = date('Y-m-d h:i:s', strtotime('-10 minutes'));
 
-        if (!$view || $crated_at > $ten_minutes_ago) {
-            $view = VideosHelper::views($video->key);
+        $views = $view->views;
+
+        if (!$view || $crated_at < $ten_minutes_ago) {
+            $views = VideosHelper::views($video->key);
             $videos_views->create([
                 'video_id' => $video->id,
-                'views' => $view,
+                'views' => $views,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
 
-        return $view;
+        return $views;
     }
 
     /**
