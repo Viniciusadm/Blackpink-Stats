@@ -1,0 +1,44 @@
+.video {
+    border: 0.4em solid #fa7294;
+}
+
+.primeiro {
+    background-color: gold;
+    padding: 0.2em;
+    border-radius: 0.3em;
+}
+
+.segundo {
+    background-color: #C0C0C0;
+    padding: 0.2em;
+    border-radius: 0.3em;
+}
+
+.terceiro {
+    background-color: #cd7f32 ;
+    padding: 0.2em;
+    border-radius: 0.3em;
+}
+
+.tituloMusicas {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.bordaVisualizacoes {
+    background-color: #fa7294;
+    border-radius: 0.3em;
+    padding: 0.2em;
+}
+
+.bordaVizualizacoes:hover {
+    background-color: #fa547d;
+}
+
+.numero {
+    color: #fa547d;
+}
+
+.visualizacoes {
+    margin-bottom: 0.1rem;
+}
