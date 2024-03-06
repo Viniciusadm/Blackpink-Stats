@@ -8,10 +8,17 @@ class SiteController extends Controller
 {
     public function home(): void
     {
-        $videos = new Video();
-        $videos = $videos->all();
+        $video = new Video();
+        $videos = $video->all();
 
-        $this->view('home.php', ['videos' => $videos]);
+        $this->view('home.php', [
+            'videos' => $videos,
+            'classes' => [
+                1 => 'primeiro',
+                2 => 'segundo',
+                3 => 'terceiro'
+            ]
+        ]);
     }
 
     public function notFound(): void

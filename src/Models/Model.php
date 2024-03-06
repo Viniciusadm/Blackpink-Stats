@@ -54,12 +54,18 @@ class Model
 
     public function create(array $data): bool
     {
-        $columns = implode(', ', array_keys($data));
+        $columns = implode(', ', array_map(function ($column) {
+            return "`$column`";
+        }, array_keys($data)));
+
         $values = ':' . implode(', :', array_keys($data));
+
         $stmt = $this->conn->prepare("INSERT INTO $this->table ($columns) VALUES ($values)");
+
         foreach ($data as $key => $value) {
             $stmt->bindValue(":$key", $value);
         }
+
         return $stmt->execute();
     }
 
