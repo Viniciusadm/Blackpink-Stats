@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 use Dotenv\Dotenv;
 use PDO;
 use PDOException;
-use PDOStatement;
+use stdClass;
 
 class Model
 {
@@ -36,10 +36,10 @@ class Model
     {
         $stmt = $this->conn->prepare("SELECT * FROM $this->table");
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function find(int $id): array|null
+    public function find(int $id): stdClass|null
     {
         $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE id = :id");
         $stmt->bindParam(':id', $id);
@@ -49,7 +49,7 @@ class Model
             return null;
         }
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
     public function create(array $data): bool
