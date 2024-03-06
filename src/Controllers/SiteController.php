@@ -2,16 +2,19 @@
 
 namespace Controllers;
 
+use Models\Video;
+
 class SiteController extends Controller
 {
-    public function home()
+    public function home(): void
     {
-        $message = "Bom dia";
+        $videos = new Video();
+        $videos = $videos->all();
 
-        $this->view('home.php', ['message' => $message]);
+        $this->view('home.php', ['videos' => $videos]);
     }
 
-    public function notFound()
+    public function notFound(): void
     {
         $this->view('notFound.php');
     }
