@@ -9,3 +9,6 @@
     <title>Blackpink Stats</title>
 </head>
 <body class="corpo">
+    <header class="container">
+        <img class="iconeSite img-fluid py-2" src="/resources/images/icone.svg" alt="icone">
+    </header>
