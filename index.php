@@ -9,7 +9,7 @@ $routes = [
     '/' => ['controller' => 'SiteController', 'action' => 'home'],
 ];
 
-$requestUri = $_SERVER['REQUEST_URI'];
+$requestUri = strtok($_SERVER['REQUEST_URI'], '?');
 
 if (array_key_exists($requestUri, $routes)) {
     $route = $routes[$requestUri];

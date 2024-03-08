@@ -12,8 +12,15 @@ class SiteController extends Controller
         $video = new Video();
         $videos = $video->all();
 
+        $date = $_GET['date'];
+
         foreach ($videos as $video) {
-            $views = VideosHelper::views($video);
+            if ($date) {
+                $views = VideosHelper::byDate($video, $date);
+            } else {
+                $views = VideosHelper::views($video);
+            }
+
             $daysTo = VideosHelper::daysTo($video, $views);
 
             $video->views = $views;

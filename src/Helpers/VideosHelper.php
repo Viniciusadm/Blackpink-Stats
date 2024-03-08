@@ -27,6 +27,14 @@ class VideosHelper
         return $views;
     }
 
+    public static function byDate($video, $date): int
+    {
+        $videos_views = new VideosView();
+
+        $view = $videos_views->last("WHERE video_id = $video->id AND DATE(created_at) = '$date'");
+        return $view->views;
+    }
+
     /**
      * @param mixed $video
      * @param int $views
