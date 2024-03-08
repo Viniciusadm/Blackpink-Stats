@@ -4,7 +4,6 @@ namespace Controllers;
 
 use Helpers\VideosHelper;
 use Models\Video;
-use Models\VideosView;
 
 class SiteController extends Controller
 {

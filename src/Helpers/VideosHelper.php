@@ -21,7 +21,7 @@ class VideosHelper
         $views = $view->views;
 
         if (!$view || $created_at < $ten_minutes_ago) {
-            $views = self::fetchViews($video, $videos_views);
+            $views = self::fetchViews($video);
         }
 
         return $views;
@@ -50,11 +50,12 @@ class VideosHelper
 
     /**
      * @param $video
-     * @param VideosView $videos_views
-     * @return mixed
+     * @return int
      */
-    private static function fetchViews($video, VideosView $videos_views): mixed
+    public static function fetchViews($video): int
     {
+        $videos_views = new VideosView();
+
         $url1 = 'https://www.googleapis.com/youtube/v3/videos?id=';
         $url2 = '&key=' . $_ENV['YOUTUBE_API_KEY'] . '&fields=items(snippet(title,publishedAt),statistics(viewCount,likeCount))&part=snippet,statistics';
 
