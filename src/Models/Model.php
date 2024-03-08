@@ -32,9 +32,9 @@ class Model
         }
     }
 
-    public function all(): array
+    public function all($select = "*"): array
     {
-        $stmt = $this->conn->prepare("SELECT * FROM $this->table");
+        $stmt = $this->conn->prepare("SELECT $select FROM $this->table");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
@@ -100,6 +100,12 @@ class Model
     {
         $stmt = $this->conn->prepare("DELETE FROM $this->table WHERE id = :id");
         $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
+    public function deleteAll(string $where): bool
+    {
+        $stmt = $this->conn->prepare("DELETE FROM $this->table $where");
         return $stmt->execute();
     }
 }
