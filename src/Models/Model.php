@@ -9,6 +9,8 @@ use PDO;
 use PDOException;
 use stdClass;
 
+date_default_timezone_set('America/Sao_Paulo');
+
 class Model
 {
     protected string $table = '';
