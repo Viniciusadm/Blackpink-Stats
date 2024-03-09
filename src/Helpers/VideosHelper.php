@@ -48,7 +48,7 @@ class VideosHelper
 
         $next = ceil($views / 100000000) * 100000000;
 
-        $media = $views / $days;
+        $media = ($views - $video->firsts_views) / ($days - 1);
 
         return [
             'days' => round(($next - $views) / $media),
