@@ -38,12 +38,13 @@ class VideosHelper
     /**
      * @param mixed $video
      * @param int $views
+     * @param null $date
      * @return array
      */
-    public static function daysTo(mixed $video, int $views): array
+    public static function daysTo(mixed $video, int $views, $date = null): array
     {
         $published_at = date('Y-m-d', strtotime($video->published_at));
-        $today = date('Y-m-d');
+        $today = $date ?: date('Y-m-d');
         $days = (strtotime($today) - strtotime($published_at)) / (60 * 60 * 24);
 
         $next = ceil($views / 100000000) * 100000000;

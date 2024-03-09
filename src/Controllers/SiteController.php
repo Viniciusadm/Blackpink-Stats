@@ -21,7 +21,7 @@ class SiteController extends Controller
                 $views = VideosHelper::views($video);
             }
 
-            $daysTo = VideosHelper::daysTo($video, $views);
+            $daysTo = VideosHelper::daysTo($video, $views, $date);
 
             $video->views = $views;
             $video->formatted_views = number_format($views, 0, ',', '.');
