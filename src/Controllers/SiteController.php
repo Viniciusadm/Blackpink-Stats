@@ -27,6 +27,7 @@ class SiteController extends Controller
             $video->formatted_views = number_format($views, 0, ',', '.');
             $video->days_to = $daysTo['days'];
             $video->next = number_format($daysTo['next'], 0, ',', '.');
+            $video->media = number_format($daysTo['media'], 0, ',', '.');
         }
 
         usort($videos, function ($a, $b) {

@@ -53,7 +53,8 @@ class VideosHelper
 
         return [
             'days' => round(($next - $views) / $media),
-            'next' => $next
+            'next' => $next,
+            'media' => $media,
         ];
     }
 
