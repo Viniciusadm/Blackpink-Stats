@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\Data;
 use Helpers\VideosHelper;
 use Models\Video;
 
@@ -10,11 +11,12 @@ class SiteController extends Controller
     public function home(): void
     {
         $video = new Video();
-        $videos = $video->all();
+        $result = $video->all();
 
         $date = $_GET['date'];
 
-        foreach ($videos as $video) {
+        $videos = [];
+        foreach ($result as $video) {
             if ($date) {
                 $views = VideosHelper::byDate($video, $date);
             } else {
@@ -24,10 +26,11 @@ class SiteController extends Controller
             $daysTo = VideosHelper::daysTo($video, $views, $date);
 
             $video->views = $views;
-            $video->formatted_views = number_format($views, 0, ',', '.');
             $video->days_to = $daysTo['days'];
-            $video->next = number_format($daysTo['next'], 0, ',', '.');
-            $video->media = number_format($daysTo['media'], 0, ',', '.');
+            $video->next = $daysTo['next'];
+            $video->media = $daysTo['media'];
+
+            $videos[] = new Data($video);
         }
 
         usort($videos, function ($a, $b) {

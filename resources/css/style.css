@@ -39,12 +39,23 @@
     color: #fa547d;
 }
 
+#ordenar {
+    user-select: none;
+    background-color: #f799b1;
+    border-color: black;
+    outline: none;
+}
+
+#ordenar:focus {
+    outline: none;
+}
+
 .visualizacoes {
     margin-bottom: 0.1rem;
 }
 
 .iconeSite {
-    width: 14rem;
+    width: 10rem;
 }
 
 .corpo {
@@ -63,5 +74,9 @@
 
     .principal {
         margin-bottom: 1em;
+    }
+
+    .iconeSite {
+        width: 14rem;
     }
 }
