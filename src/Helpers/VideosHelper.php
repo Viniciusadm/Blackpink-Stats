@@ -43,19 +43,29 @@ class VideosHelper
      */
     public static function daysTo(mixed $video, int $views, $date = null): array
     {
-        $published_at = date('Y-m-d', strtotime($video->published_at));
-        $today = $date ?: date('Y-m-d');
-        $days = (strtotime($today) - strtotime($published_at)) / (60 * 60 * 24);
-
         $next = ceil($views / 100000000) * 100000000;
-
-        $media = ($views - $video->firsts_views) / ($days - 1);
+        $media = self::getMedia($video, $views, $date);
 
         return [
             'days' => round(($next - $views) / $media),
             'next' => $next,
             'media' => $media,
         ];
+    }
+
+    /**
+     * @param mixed $video
+     * @param int $views
+     * @param null|string $date
+     * @return int
+     */
+    public static function getMedia(mixed $video, int $views, string $date = null): int
+    {
+        $published_at = date('Y-m-d', strtotime($video->published_at));
+        $today = $date ?: date('Y-m-d');
+        $days = (strtotime($today) - strtotime($published_at)) / (60 * 60 * 24);
+
+        return ($views - $video->firsts_views) / ($days - 1);
     }
 
     /**
