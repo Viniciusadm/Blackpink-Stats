@@ -43,11 +43,21 @@ class VideosHelper
      */
     public static function daysTo(mixed $video, int $views, $date = null): array
     {
+        $decay = $video->decay_rate;
         $next = ceil($views / 100000000) * 100000000;
         $media = self::getMedia($video, $views, $date);
+        $total = $next - $views;
+
+        $days = 0;
+
+        while ($total > 0) {
+            $days++;
+            $total -= $media;
+            $media -= $decay;
+        }
 
         return [
-            'days' => round(($next - $views) / $media),
+            'days' => $days,
             'next' => $next,
             'media' => $media,
         ];

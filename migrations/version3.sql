@@ -1,0 +1,1 @@
+alter table videos add decay_rate int null after firsts_views;
