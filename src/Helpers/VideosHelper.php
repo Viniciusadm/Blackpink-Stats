@@ -48,12 +48,13 @@ class VideosHelper
         $media = self::getMedia($video, $views, $date);
         $total = $next - $views;
 
+        $sum = $media;
         $days = 0;
 
         while ($total > 0) {
             $days++;
-            $total -= $media;
-            $media -= $decay;
+            $total -= $sum;
+            $sum -= $decay;
         }
 
         return [
