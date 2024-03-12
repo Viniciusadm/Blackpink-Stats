@@ -14,6 +14,7 @@ class SiteController extends Controller
         $result = $video->all();
 
         $date = $_GET['date'];
+        $admin = isset($_GET['admin']);
 
         $videos = [];
         foreach ($result as $video) {
@@ -39,6 +40,7 @@ class SiteController extends Controller
 
         $this->view('home.php', [
             'videos' => $videos,
+            'admin' => $admin,
             'classes' => [
                 1 => 'primeiro',
                 2 => 'segundo',

@@ -1,3 +1,9 @@
+<?php
+/** @var array $videos */
+/** @var array $classes */
+/** @var bool $admin */
+?>
+
 <header class="container">
     <div class="d-flex justify-content-between mt-2">
         <img class="iconeSite img-fluid py-2" src="/resources/images/icone.svg" alt="icone">
@@ -15,7 +21,7 @@
     <div class="row" id="videos">
         <?php foreach ($videos as $key => $video): ?>
             <div
-                class="video p-2 col-12 col-sm-6 col-md-4"
+                class="video p-2 pb-3 col-12 col-sm-6 col-md-4"
                 data-views="<?=$video->views?>"
                 data-days="<?=$video->days_to?>"
                 data-media="<?=$video->media?>"
@@ -34,11 +40,16 @@
                     >
                         <?=$video->formatNumber('views')?></span> visualizações
                 </p>
-                <p class="lead">
+                <p class="lead mb-0">
                     <span class="numero" title="Publicado em <?=$video->formatDate('published_at')?>">
                         <?=$video->days_to?>
                     </span> dia(s) pra chegar em <?=$video->formatNumber('next')?> visualizações
                 </p>
+                <?php
+                    if ($admin) {
+                        echo '<p class="mb-0">Taxa de decaimento: ' . $video->formatNumber('decay_rate') . '</p>';
+                    }
+                ?>
             </div>
         <?php endforeach; ?>
     </div>
