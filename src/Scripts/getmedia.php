@@ -6,10 +6,14 @@ require 'src/functions.php';
 
 use DateInterval;
 use DateTime;
+use Exception;
 use Helpers\VideosHelper;
 use Models\Video;
 use Models\VideosView;
 
+/**
+ * @throws Exception
+ */
 function media(): void
 {
     $video = new Video();
@@ -42,7 +46,7 @@ function media(): void
         $obj = getObjectById($videos, $video_id);
 
         foreach ($dates as $date) {
-            $media = VideosHelper::getMedia($obj, $date['views'], $date['date']);
+            $media = VideosHelper::getMedia($obj, $date['date']);
             $medias[$video_id][] = $media;
         }
     }

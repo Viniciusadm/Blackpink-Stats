@@ -66,6 +66,13 @@ class Model
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    public function limit(int $limit, int $offset = 0): array
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function create(array $data): bool
     {
         $columns = implode(', ', array_map(function ($column) {

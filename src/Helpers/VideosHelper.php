@@ -2,7 +2,10 @@
 
 namespace Helpers;
 
+use DateInterval;
+use DateTime;
 use Dotenv\Dotenv;
+use Exception;
 use Models\VideosView;
 
 class VideosHelper
@@ -40,25 +43,15 @@ class VideosHelper
      * @param int $views
      * @param null $date
      * @return array
+     * @throws Exception
      */
     public static function daysTo(mixed $video, int $views, $date = null): array
     {
-        $decay = $video->decay_rate;
         $next = ceil($views / 100000000) * 100000000;
-        $media = self::getMedia($video, $views, $date);
-        $total = $next - $views;
-
-        $sum = $media;
-        $days = 0;
-
-        while ($total > 0) {
-            $days++;
-            $total -= $sum;
-            $sum -= $decay;
-        }
+        $media = self::getMedia($video, $date);
 
         return [
-            'days' => $days,
+            'days' => ceil(($next - $views) / $media),
             'next' => $next,
             'media' => $media,
         ];
@@ -66,24 +59,51 @@ class VideosHelper
 
     /**
      * @param mixed $video
-     * @param int $views
      * @param null|string $date
      * @return int
+     * @throws Exception
      */
-    public static function getMedia(mixed $video, int $views, string $date = null): int
+    public static function getMedia(mixed $video, string $date = null): int
     {
-        $published_at = date('Y-m-d', strtotime($video->published_at));
-        $today = $date ?: date('Y-m-d');
-        $days = (strtotime($today) - strtotime($published_at)) / (60 * 60 * 24);
+        $dataAtual = $date ? new DateTime($date) : new DateTime();
+        $videos_views = new VideosView();
 
-        return ($views - $video->firsts_views) / ($days - 1);
+        $dataAtual->sub(new DateInterval('P7D'));
+
+        $views = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = $dataAtual->format('Y-m-d');
+            $view = $videos_views->last("WHERE video_id = $video->id AND fixed = 1 AND DATE(created_at) = '$date'");
+
+            if (!$view) {
+                $view = $videos_views->last("WHERE video_id = $video->id AND DATE(created_at) = '$date'");
+            }
+
+            if ($view) {
+                $views[] = $view->views;
+            }
+
+            $dataAtual->add(new DateInterval('P1D'));
+        }
+
+        $atual = [];
+        foreach ($views as $index => $m) {
+            if ($index === 0) {
+                continue;
+            }
+
+            $atual[] = $m - $views[$index - 1];
+        }
+
+        return floor(array_sum($atual) / count($atual));
     }
 
     /**
      * @param $video
+     * @param bool $fixed
      * @return int
      */
-    public static function fetchViews($video, $fixed = false): int
+    public static function fetchViews($video, bool $fixed = false): int
     {
         $videos_views = new VideosView();
 
