@@ -7,7 +7,7 @@ use Models\VideosView;
 
 class VideosHelper
 {
-    public static function views($video): int
+    public static function views($video, $verify = true): int
     {
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
@@ -20,8 +20,8 @@ class VideosHelper
 
         $views = $view->views;
 
-        if (!$view || $created_at < $ten_minutes_ago) {
-            $views = self::fetchViews($video);
+        if ((!$view || $created_at < $ten_minutes_ago) || !$verify) {
+            $views = self::fetchViews($video, !$verify);
         }
 
         return $views;
@@ -83,7 +83,7 @@ class VideosHelper
      * @param $video
      * @return int
      */
-    public static function fetchViews($video): int
+    public static function fetchViews($video, $fixed = false): int
     {
         $videos_views = new VideosView();
 
@@ -101,6 +101,7 @@ class VideosHelper
             'video_id' => $video->id,
             'views' => $views,
             'created_at' => date('Y-m-d H:i:s'),
+            'fixed' => $fixed ? '1' : '0',
         ]);
 
         return $views;

@@ -22,7 +22,7 @@ function delete($date): void
     }
 
     if (!empty($ids)) {
-        $result = $videos_views->deleteAll("WHERE DATE(created_at) = '$date' AND id NOT IN (" . implode(',', $ids) . ")");
+        $result = $videos_views->deleteAll("WHERE DATE(created_at) = '$date' AND id NOT IN (" . implode(',', $ids) . ") AND fixed != 1");
         echo $result ? 'Rows deleted' : 'No rows deleted';
     } else {
         echo 'No matching records found for the given date.';

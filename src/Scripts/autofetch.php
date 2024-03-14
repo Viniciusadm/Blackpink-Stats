@@ -12,7 +12,7 @@ function fetch(): void
     $videos = $video->all();
 
     foreach ($videos as $video) {
-        $result = VideosHelper::views($video);
+        $result = VideosHelper::views($video, false);
         echo $video->title . ': ' . $result . PHP_EOL;
     }
 }
