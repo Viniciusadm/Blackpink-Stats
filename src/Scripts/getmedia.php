@@ -18,7 +18,9 @@ function media(): void
 
     foreach ($videos as $vid) {
         $growth = VideosHelper::getGrowth($vid);
-        $video->update($vid->id, ['media' => VideosHelper::getMedia($growth)]);
+        $media = VideosHelper::getMedia($growth);
+        $video->update($vid->id, ['media' => $media]);
+        echo "Video {$vid->id} updated with media {$media}\n";
     }
 }
 
