@@ -1,0 +1,1 @@
+alter table videos add media int null after decay_rate;

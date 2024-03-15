@@ -3,11 +3,15 @@
 namespace Controllers;
 
 use Classes\Data;
+use Exception;
 use Helpers\VideosHelper;
 use Models\Video;
 
 class SiteController extends Controller
 {
+    /**
+     * @throws Exception
+     */
     public function home(): void
     {
         $video = new Video();
