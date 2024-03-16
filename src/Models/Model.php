@@ -4,10 +4,9 @@ namespace Models;
 
 require 'vendor/autoload.php';
 
+use Classes\Collection;
 use Database\Database;
-use Dotenv\Dotenv;
 use PDO;
-use PDOException;
 use Traits\ModelFunctions;
 
 date_default_timezone_set('America/Sao_Paulo');
@@ -27,11 +26,13 @@ class Model
 
     /**
      * @param string $select
-     * @return Model[]
+     * @return Collection
      */
-    public function all(string $select = "*"): array
+    public function all(string $select = "*"): Collection
     {
-        return $this->query("SELECT $select FROM $this->table");
+        $array = $this->query("SELECT $select FROM $this->table");
+
+        return new Collection($array);
     }
 
     public function find(int $id): Model|null
@@ -98,11 +99,13 @@ class Model
     /**
      * @param int $limit
      * @param int $offset
-     * @return Model[]
+     * @return Collection
      */
-    public function limit(int $limit, int $offset = 0): array
+    public function limit(int $limit, int $offset = 0): Collection
     {
-        return $this->query("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
+        $array = $this->query("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
+
+        return new Collection($array);
     }
 
     public function create(array $data): Model|null

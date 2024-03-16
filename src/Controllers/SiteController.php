@@ -34,9 +34,7 @@ class SiteController extends Controller
             $video->set('media', $daysTo['media']);
         }
 
-        usort($videos, function ($a, $b) {
-            return $b->views <=> $a->views;
-        });
+        $videos->sort('views', 'desc');
 
         $this->view('home.php', [
             'videos' => $videos,
