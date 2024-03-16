@@ -17,5 +17,5 @@ class Video extends Model
     public int|null $media = null;
     public string|null $published_at = null;
 
-    protected string $table = 'videos';
+    public string $table = 'videos';
 }

@@ -15,8 +15,8 @@ class Model
 {
     use ModelFunctions;
 
-    protected string $table = '';
-    protected string $primaryKey = 'id';
+    public string $table = '';
+    public string $primaryKey = 'id';
     protected PDO $conn;
 
     public function __construct()

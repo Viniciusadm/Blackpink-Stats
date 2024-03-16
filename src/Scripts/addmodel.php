@@ -62,7 +62,7 @@ foreach ($columns as $column) {
     $classCode .= ";\n";
 }
 
-$classCode .= "    protected string \$table = '$tableName';\n}";
+$classCode .= "    public string \$table = '$tableName';\n}";
 
 $filePath = __DIR__ . '/../Models/' . $modelName . '.php';
 

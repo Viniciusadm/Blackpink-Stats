@@ -19,6 +19,7 @@ class SiteController extends Controller
         $date = $_GET['date'];
         $admin = isset($_GET['admin']);
 
+        /** @var Video $video */
         foreach ($videos as $video) {
             if ($date) {
                 $views = VideosHelper::byDate($video, $date);

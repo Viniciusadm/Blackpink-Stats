@@ -12,5 +12,5 @@ class VideosView extends Model
     public int $fixed;
     public string $created_at;
 
-    protected string $table = 'videos_views';
+    public string $table = 'videos_views';
 }
