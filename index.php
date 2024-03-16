@@ -7,10 +7,7 @@ spl_autoload_register(function ($className) {
     require_once __DIR__ . '/src/' . $className . '.php';
 });
 
-$routes = [
-    '/' => ['controller' => 'SiteController', 'action' => 'home'],
-    '/details/{slug}' => ['controller' => 'SiteController', 'action' => 'details'],
-];
+$routes = include 'routes.php';
 
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
 
