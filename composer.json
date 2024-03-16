@@ -13,7 +13,8 @@
     "autoload": {
         "psr-4": {
             "Models\\": "src/Models/",
-            "Helpers\\": "src/Helpers/"
+            "Helpers\\": "src/Helpers/",
+            "Database\\": "Database/"
         }
     }
 }

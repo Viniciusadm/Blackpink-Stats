@@ -4,6 +4,7 @@ namespace Models;
 
 require 'vendor/autoload.php';
 
+use Database\Database;
 use Dotenv\Dotenv;
 use PDO;
 use PDOException;
@@ -21,20 +22,7 @@ class Model
 
     public function __construct()
     {
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-        $dotenv->load();
-
-        $host = $_ENV['DB_HOST'];
-        $username = $_ENV['DB_USERNAME'];
-        $password = $_ENV['DB_PASSWORD'];
-        $dbname = $_ENV['DB_DATABASE'];
-
-        try {
-            $this->conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo 'Erro de conexão: ' . $e->getMessage();
-        }
+        $this->conn = Database::getConnection();
     }
 
     /**
