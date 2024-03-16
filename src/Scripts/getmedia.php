@@ -14,13 +14,17 @@ use Models\Video;
 function media(): void
 {
     $video = new Video();
+
+    /**
+     * @var Video[] $videos
+     */
     $videos = $video->all('id, firsts_views, published_at');
 
     foreach ($videos as $vid) {
         $growth = VideosHelper::getGrowth($vid);
         $media = VideosHelper::getMedia($growth);
-        $video->update($vid->id, ['media' => $media]);
-        echo "Video {$vid->id} updated with media {$media}\n";
+        $video->find($vid->id)->update(['media' => $media]);
+        echo "Video $vid->id updated with media $media\n";
     }
 }
 

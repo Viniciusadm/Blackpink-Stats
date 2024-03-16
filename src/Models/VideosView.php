@@ -2,9 +2,15 @@
 
 namespace Models;
 
-require 'vendor/autoload.php';
+require_once 'Model.php';
 
 class VideosView extends Model
 {
+    public int $id;
+    public int $video_id;
+    public int $views;
+    public int $fixed;
+    public string $created_at;
+
     protected string $table = 'videos_views';
 }
