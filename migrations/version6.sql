@@ -1,0 +1,1 @@
+alter table videos add type enum ('video', 'music') default 'video' not null after title;
