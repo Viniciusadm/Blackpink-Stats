@@ -9,19 +9,39 @@ spl_autoload_register(function ($className) {
 
 $routes = [
     '/' => ['controller' => 'SiteController', 'action' => 'home'],
+    '/details/{slug}' => ['controller' => 'SiteController', 'action' => 'details'],
 ];
 
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
 
-if (array_key_exists($requestUri, $routes)) {
-    $route = $routes[$requestUri];
-    $controllerName = $route['controller'];
-    $action = $route['action'];
-} else {
-    $controllerName = 'SiteController';
-    $action = 'notFound';
+$uri = [];
+foreach ($routes as $route => $value) {
+    $route = str_replace('/', '\/', $route);
+    $route = preg_replace('/\{[a-z]+\}/', '([a-z0-9-]+)', $route);
+    $route = '/^' . $route . '$/';
+
+    if (preg_match($route, $requestUri, $matches)) {
+        $uri = [
+            'controller' => $value['controller'],
+            'action' => $value['action'],
+            'params' => $matches
+        ];
+
+        break;
+    }
 }
 
-$controllerClassName = 'Controllers\\' . $controllerName;
-$controller = new $controllerClassName();
-$controller->$action();
+if (empty($uri)) {
+    $uri = [
+        'controller' => 'SiteController',
+        'action' => 'notFound',
+        'params' => []
+    ];
+}
+
+$controller = 'Controllers\\' . $uri['controller'];
+$action = $uri['action'];
+$params = array_slice($uri['params'], 1);
+
+$controller = new $controller();
+$controller->$action(...$params);

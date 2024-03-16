@@ -1,0 +1,1 @@
+alter table videos add slug varchar(255) null after title;

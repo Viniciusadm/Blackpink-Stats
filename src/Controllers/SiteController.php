@@ -53,6 +53,21 @@ class SiteController extends Controller
         ]);
     }
 
+    public function details($slug): void
+    {
+        $video = new Video();
+        $result = $video->first("WHERE slug = '$slug'");
+
+        if ($result) {
+            $video = new Data($result);
+            $this->view('details.php', [
+                'video' => $video
+            ]);
+        } else {
+            $this->notFound();
+        }
+    }
+
     public function notFound(): void
     {
         $this->view('notFound.php');

@@ -54,6 +54,18 @@ class Model
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    public function first($where): stdClass|null
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table $where ORDER BY id LIMIT 1");
+        $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
+            return null;
+        }
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
     public function last($where): stdClass|null
     {
         $stmt = $this->conn->prepare("SELECT * FROM $this->table $where ORDER BY id DESC LIMIT 1");
