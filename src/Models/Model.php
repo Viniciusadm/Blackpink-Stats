@@ -7,11 +7,14 @@ require 'vendor/autoload.php';
 use Dotenv\Dotenv;
 use PDO;
 use PDOException;
+use Traits\ModelFunctions;
 
 date_default_timezone_set('America/Sao_Paulo');
 
 class Model
 {
+    use ModelFunctions;
+
     protected string $table = '';
     protected string $primaryKey = 'id';
     protected PDO $conn;
@@ -40,21 +43,7 @@ class Model
      */
     public function all(string $select = "*"): array
     {
-        $stmt = $this->conn->prepare("SELECT $select FROM $this->table");
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-        $objects = [];
-
-        foreach ($result as $object) {
-            $model = new static();
-            foreach ($object as $key => $value) {
-                $model->{$key} = $value;
-            }
-            $objects[] = $model;
-        }
-
-        return $objects;
+        return $this->query("SELECT $select FROM $this->table");
     }
 
     public function find(int $id): Model|null
@@ -125,22 +114,7 @@ class Model
      */
     public function limit(int $limit, int $offset = 0): array
     {
-        $stmt = $this->conn->prepare("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
-        $stmt->execute();
-
-        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-        $objects = [];
-
-        foreach ($result as $object) {
-            $model = new static();
-            foreach ($object as $key => $value) {
-                $model->{$key} = $value;
-            }
-            $objects[] = $model;
-        }
-
-        return $objects;
+        return $this->query("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
     }
 
     public function create(array $data): Model|null
@@ -216,5 +190,31 @@ class Model
     private function getPrimaryKey(): string
     {
         return $this->primaryKey;
+    }
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    private function query(string $query): array
+    {
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $objects = [];
+
+        foreach ($result as $object) {
+            $model = new static();
+
+            foreach ($object as $key => $value) {
+                $model->{$key} = $value;
+            }
+
+            $objects[] = $model;
+        }
+
+        return $objects;
     }
 }

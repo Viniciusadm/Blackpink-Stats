@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-use Classes\Data;
 use Exception;
 use Helpers\VideosHelper;
 use Models\Video;
@@ -15,13 +14,12 @@ class SiteController extends Controller
     public function home(): void
     {
         $video = new Video();
-        $result = $video->all();
+        $videos = $video->all();
 
         $date = $_GET['date'];
         $admin = isset($_GET['admin']);
 
-        $videos = [];
-        foreach ($result as $video) {
+        foreach ($videos as $video) {
             if ($date) {
                 $views = VideosHelper::byDate($video, $date);
             } else {
@@ -30,12 +28,10 @@ class SiteController extends Controller
 
             $daysTo = VideosHelper::daysTo($video, $views, $date);
 
-            $video->views = $views;
-            $video->days_to = $daysTo['days'];
-            $video->next = $daysTo['next'];
-            $video->media = $daysTo['media'];
-
-            $videos[] = new Data($video);
+            $video->set('views', $views);
+            $video->set('days_to', $daysTo['days']);
+            $video->set('next', $daysTo['next']);
+            $video->set('media', $daysTo['media']);
         }
 
         usort($videos, function ($a, $b) {
@@ -56,12 +52,11 @@ class SiteController extends Controller
     public function details($slug): void
     {
         $video = new Video();
-        $result = $video->first("WHERE slug = '$slug'");
+        $result = $video->first("where slug = '$slug'");
 
         if ($result) {
-            $video = new Data($result);
             $this->view('details.php', [
-                'video' => $video
+                'video' => $result,
             ]);
         } else {
             $this->notFound();

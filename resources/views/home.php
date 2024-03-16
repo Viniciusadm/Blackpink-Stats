@@ -30,9 +30,9 @@
                 <a href="https://www.youtube.com/watch?v=<?= $video->key ?>" target="_blank">
                     <img class="img-fluid" src="https://i.ytimg.com/vi/<?=$video->key?>/sddefault.jpg" alt="<?= $video->title ?>">
                 </a>
-                <h1 class="py-2 mt-2 mb-0 tituloMusicas">
+                <a class="d-block py-2 mt-2 mb-0 tituloMusicas" href="/details/<?=$video->slug?>">
                     <span class="<?php echo $classes[$key + 1] ?? ''; ?>"><?=$key + 1?>°</span> <?=$video->title?>
-                </h1>
+                </a>
                 <p class="lead visualizacoes">
                     <span
                         class="bordaVisualizacoes"

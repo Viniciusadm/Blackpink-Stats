@@ -23,6 +23,8 @@
 .tituloMusicas {
     font-size: 1em;
     font-weight: bold;
+    color: white;
+    text-decoration: none;
 }
 
 .bordaVisualizacoes {
