@@ -47,7 +47,7 @@ class VideosHelper
      */
     public static function daysTo(mixed $video, int $views, $date = null): array
     {
-        $next = ceil($views / 50000000) * 50000000;
+        $next = ceil($views / 100000000) * 100000000;
         $media = $video->media;
 
         return [
