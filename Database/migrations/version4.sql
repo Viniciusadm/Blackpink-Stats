@@ -1,1 +1,0 @@
-alter table videos_views add fixed boolean default false not null after views;
